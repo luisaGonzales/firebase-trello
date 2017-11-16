@@ -4,7 +4,8 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import store from './store/store';
-import {Provider} from 'redux-zero/react'
+import {Provider} from 'redux-zero/react';
+import {readBoard} from './actions/actions'
 
 const Index = () => {
     return(
@@ -13,6 +14,7 @@ const Index = () => {
         </Provider>
     );
 }
+readBoard ();
 
 ReactDOM.render(<Index />, document.getElementById('root'));
 registerServiceWorker();
