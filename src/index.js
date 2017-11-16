@@ -3,6 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+import store from './store/store';
+import {Provider} from 'redux-zero/react'
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const Index = () => {
+    return(
+        <Provider store={store}>
+            <App />
+        </Provider>
+    );
+}
+
+ReactDOM.render(<Index />, document.getElementById('root'));
 registerServiceWorker();
