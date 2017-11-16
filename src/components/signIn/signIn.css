@@ -1,0 +1,44 @@
+.background{
+    background: #89609E;
+    background-size: cover;
+    position: relative;
+    height: 100vh;
+}
+
+.brand{
+    display: inline-block;
+    background-size: contain;
+    height: 62px;
+    width: 198px;
+    vertical-align: middle;
+    margin-top: 10%;
+    margin-bottom: 2%;
+}
+
+.inputSI{
+    border-radius: 3px;
+    box-shadow: none;
+    line-height: 1.2em;
+    font-size: 1.1em;
+    border: 0px none;
+    padding: 1.5em;
+    font-size: 1.2em;
+    margin: 0 auto;
+    width: 80%;
+}
+
+.btnSubmit{
+    transition: all 0.15s ease-out 0s;
+    background: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+    width: 80%;
+    padding: 1em;
+    font-size: 1.1em;
+    font-weight: 600; 
+}
+
+.btnSubmit:hover{
+    color: #89609E;
+    background-color: #fff;
+}
