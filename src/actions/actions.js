@@ -84,3 +84,33 @@ auth.onAuthStateChanged(user => {
      })
   }
 });
+
+export function signUp (firstname, lastname, email, password) {
+   console.log ('signUp' , firstname, lastname, email, password);
+
+   auth.createUserWithEmailAndPassword (email, password).then ( user => {
+      let newuser = {
+        firstname, lastname, email, password
+      }
+      database.ref ('users/' + user.uid).set (newuser);   
+
+     // database.ref ('users/' + user.uid + '/options').update ( 'option1, option2, option3...');   
+     //  database.ref ('users/').push (newuser);   
+      
+      // database.ref ('users/' + user.uid).once ('value').then ( res => {
+      //    const fullUserInfo = res.val(); 
+
+      //    console.log ('full info ', fullUserInfo);
+      //    store.setState ( {
+      //       user: {
+      //          id : user.uid,
+      //          email :  fullUserInfo.email,
+      //          firstname :  fullUserInfo.firstname,
+      //          lastname :  fullUserInfo.lastname,              
+      //       }
+      //    })
+      // })
+
+   })
+   
+}

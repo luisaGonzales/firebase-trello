@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './signUp.css';
 import {NavLink} from 'react-router-dom';
 import {Form, FormGroup, FormControl, Col, Button, ControlLabel} from 'react-bootstrap';
-// import {signUp} from './Actions'
+import {signUp} from '../../actions/actions'
 
 const SignUp = ({}) => {
     const onSubmit = (e) => {
@@ -10,14 +10,19 @@ const SignUp = ({}) => {
         let correctPassword = false;
         if(this.firstName.value && this.lastName.value && this.email.value && this.password.value && this.confirmPassword.value){
             if(this.confirmPassword.value === this.password.value){
-                console.log(this.firstName.value, this.lastName.value, this.email.value, this.password.value, this.confirmPassword.value); 
+                signUp(this.firstName.value, this.lastName.value, this.email.value, this.password.value); 
+                this.firstName.value = "";
+                this.lastName.value = "";
+                this.email.value = ""; 
+                this.password.value = "";
+                this.confirmPassword.value = "";
             } else {
                 alert("Las contraseñas no son iguales");
                 this.password.value = "";
                 this.confirmPassword.value = "";
                 this.password.focus();
             }
-        }
+        } 
     }
     return (
         <div className="background text-center">
