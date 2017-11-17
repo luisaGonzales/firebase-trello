@@ -7,10 +7,16 @@ import {Form, FormGroup, FormControl, Col, Button, ControlLabel} from 'react-boo
 const SignUp = ({}) => {
     const onSubmit = (e) => {
         e.preventDefault();
+        let correctPassword = false;
         if(this.firstName.value && this.lastName.value && this.email.value && this.password.value && this.confirmPassword.value){
-            console.log(this.firstName.value, this.lastName.value, this.email.value, this.password.value, this.confirmPassword.value);
-            this.password.value = "";
-            this.confirmPassword.value = "";
+            if(this.confirmPassword.value === this.password.value){
+                console.log(this.firstName.value, this.lastName.value, this.email.value, this.password.value, this.confirmPassword.value); 
+            } else {
+                alert("Las contraseñas no son iguales");
+                this.password.value = "";
+                this.confirmPassword.value = "";
+                this.password.focus();
+            }
         }
     }
     return (
