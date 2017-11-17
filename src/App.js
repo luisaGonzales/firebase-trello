@@ -4,7 +4,7 @@ import './App.css';
 import {HashRouter, Route, Switch, Redirect} from 'react-router-dom'
 import Board from './components/Board/Board';
 import SignIn from './components/signIn/signIn';
-// import SignUp from './components/signUp/signUp';
+import SignUp from './components/signUp/signUp';
 
 
 const App = ({stages, tasks}) => {
