@@ -1,0 +1,55 @@
+.background{
+    background: #89609E;
+    background-size: cover;
+    position: relative;
+    height: 100vh;
+}
+.form-horizontal .form-group{
+    margin-right: 0px;
+}
+.brandSU{
+    display: inline-block;
+    background-size: contain;
+
+    vertical-align: middle;
+    margin-top: 5%;
+    margin-bottom: 2%;
+}
+
+.inputSI{
+    border-radius: 3px;
+    box-shadow: none;
+    line-height: 1.2em;
+    font-size: 1.1em;
+    border: 0px none;
+    padding: 1.5em;
+    font-size: 1.2em;
+    /* margin: 0 auto; */
+    width: 80%;
+}
+
+.btnSubmit{
+    transition: all 0.15s ease-out 0s;
+    background: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+    width: 80%;
+    padding: 1em;
+    font-size: 1.1em;
+    font-weight: 600; 
+}
+
+.btnSubmit:hover{
+    color: #89609E;
+    background-color: #fff;
+}
+
+.navlinkSI, .navlinkSI:hover{
+    text-decoration: none;
+    color: #bea7ca;
+    font-weight: 600;  
+}
+
+.navlinkSI:hover{
+    color: #fff;
+}
