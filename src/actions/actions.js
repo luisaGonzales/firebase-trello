@@ -54,6 +54,34 @@ export function  addTask (stage, text) {
    })  */
 }
 
-export function signIn (email, password){
-  console.log(email, password);
+export function signIn (email, password) {
+  auth.signInWithEmailAndPassword(email, password).then (userObj => {
+
+     database.ref ('users/' + userObj.uid).once ('value').then ( res => {
+        const fullUserInfo = res.val(); 
+        console.log ('full info ', fullUserInfo);
+        store.setState ( {
+           user: {
+              id : userObj.uid,
+              email :  fullUserInfo.email,
+              firstname : fullUserInfo.firstname,
+              lastname : fullUserInfo.lastname, 
+              stages : fullUserInfo.stages,
+              tasks : fullUserInfo.tasks            
+           }
+        })
+     })
+  })
 }
+
+
+auth.onAuthStateChanged(user => {
+  if (user) {
+     console.log('user', user);
+     let usersRef = database.ref('/users');
+     let userRef = usersRef.child(user.uid);
+     store.setState ( {
+        successLogin : true
+     })
+  }
+});
