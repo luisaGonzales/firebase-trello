@@ -42,3 +42,10 @@
     color: #89609E;
     background-color: #fff;
 }
+
+.instruccions{
+    color: #ffffff;
+    font-weight: 500;
+    padding: 0.2em;
+    font-style: italic;
+}

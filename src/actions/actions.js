@@ -1,18 +1,5 @@
 import store from '../store/store'
-import firebase from 'firebase';
-
-// Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyCHifooBzhpZ2iLd4glpXHRqH-25oV2eGc",
-    authDomain: "trello-list-firebase.firebaseapp.com",
-    databaseURL: "https://trello-list-firebase.firebaseio.com",
-    projectId: "trello-list-firebase",
-    storageBucket: "trello-list-firebase.appspot.com",
-    messagingSenderId: "643360796421"
-  };
-  firebase.initializeApp(config);
-
-
+import firebase, {auth, database} from './firebase';
 
 export function readBoard () {
    firebase.database().ref('stages').on ('value', res => {
@@ -65,4 +52,8 @@ export function  addTask (stage, text) {
    store.setState ({
       tasks : tasks
    })  */
+}
+
+export function signIn (email, password){
+  console.log(email, password);
 }
