@@ -74,7 +74,6 @@ export function signIn (email, password) {
   })
 }
 
-
 auth.onAuthStateChanged(user => {
   if (user) {
      console.log('user', user);
