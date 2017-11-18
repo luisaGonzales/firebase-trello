@@ -2,7 +2,7 @@ import store from '../store/store'
 import firebase, {auth, database} from './firebase';
 
 export function readBoard () {
-   firebase.database().ref('stages').on ('value', res => {
+   firebase.database().ref('users/stages').on ('value', res => {
       let stages = []
       res.forEach ( snap  => {
          const stage = snap.val();
@@ -23,6 +23,8 @@ export function readBoard () {
          tasks : tasks
       }) 
    });   
+
+
 }
 
 export function  addStage (text) {
@@ -92,7 +94,10 @@ export function signUp (firstname, lastname, email, password) {
       let newuser = {
         firstname, lastname, email, password
       }
-      database.ref ('users/' + user.uid).set (newuser);   
+      database.ref ('users/' + user.uid).set (newuser);  
+      let enviar = {lastname};
+
+      database.ref ('users/' + user.uid + '/stages').set(enviar);
 
      // database.ref ('users/' + user.uid + '/options').update ( 'option1, option2, option3...');   
      //  database.ref ('users/').push (newuser);   
