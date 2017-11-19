@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './signIn.css';
-import {NavLink} from 'react-router-dom';
+import {Redirect, NavLink} from 'react-router-dom';
 import {Form, FormGroup, FormControl, Col, Button, ControlLabel, Alert} from 'react-bootstrap';
 import {signIn} from '../../actions/actions'
 
@@ -47,7 +47,6 @@ const SignIn = ({}) => {
                             inputRef={ref => {
                             this.password = ref
                         }}/>
-                        <p className="instruccions">* Debe contener por lo menos 6 caracteres.</p>
                     </Col>
                 </FormGroup>
 
@@ -58,7 +57,13 @@ const SignIn = ({}) => {
                         </Button>
                     </Col>
                 </FormGroup>
-            </Form>
+            </Form> 
+            <Col smOffset={4} sm={4}>
+                <div className="text">Or</div>
+                <NavLink to= "/signUp" className="btnSubmit"> Sign Up </NavLink> 
+            </Col>
+            
+            
         </div>
     );
 }
