@@ -1,9 +1,12 @@
 import React from 'react'
-import {addStage} from '../../actions/actions'
+import {addStage, signOut} from '../../actions/actions'
 import Stage from '../Stage/Stage';
-import './Board.css'
+import './Board.css';
+import {Button} from 'react-bootstrap';
+import {connect} from 'redux-zero/react';
+import {Redirect} from 'react-router-dom';
 
-const Board = ({stages, tasks}) => {
+const Board = ({stages, tasks, successLogin}) => {
    const list = stages.map ( stage => {
       return <Stage  key={stage} title={stage} 
          tasks = {  tasks.filter ( e => e.stage === stage )}
@@ -12,7 +15,9 @@ const Board = ({stages, tasks}) => {
 
    return (
       <div className = "Board-container">
-        
+        {
+          !successLogin && <Redirect to = '/signIn' />
+        }
           <div className = "Board-column">
              {list}
           </div>
@@ -27,8 +32,16 @@ const Board = ({stages, tasks}) => {
                </button>
                </form>
             </div>
+            <Button type="button" className="btnSubmit" onClick={
+              () => {
+                  console.log("click");
+                  signOut()}
+          }>
+              Sign Out
+          </Button>
       </div>
    ); 
 }
 
-export default Board;
+const mapToProps = ({stages, tasks, successLogin}) => ({stages, tasks, successLogin});
+export default connect (mapToProps)(Board);
