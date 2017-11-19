@@ -62,6 +62,7 @@ export function signIn (email, password) {
      database.ref ('users/' + userObj.uid).once ('value').then ( res => {
         const fullUserInfo = res.val(); 
         console.log ('full info ', fullUserInfo);
+        console.log(fullUserInfo.email.split("@"))
         store.setState ( {
            user: {
               id : userObj.uid,
@@ -94,28 +95,40 @@ export function signUp (firstname, lastname, email, password) {
       let newuser = {
         firstname, lastname, email, password
       }
-      database.ref ('users/' + user.uid).set (newuser);  
-      let enviar = {lastname};
-
-      database.ref ('users/' + user.uid + '/stages').set(enviar);
+      let userName = email.split("@")[0];
+      console.log(userName)
+      database.ref ('users/' + userName).set (newuser);  
+      // let enviar = {lastname};
+      // database.ref ('users/' + user.uid + '/stages').set(enviar);
 
      // database.ref ('users/' + user.uid + '/options').update ( 'option1, option2, option3...');   
      //  database.ref ('users/').push (newuser);   
       
-      // database.ref ('users/' + user.uid).once ('value').then ( res => {
-      //    const fullUserInfo = res.val(); 
+      database.ref ('users/' + userName).once ('value').then ( res => {
+         const fullUserInfo = res.val(); 
 
-      //    console.log ('full info ', fullUserInfo);
-      //    store.setState ( {
-      //       user: {
-      //          id : user.uid,
-      //          email :  fullUserInfo.email,
-      //          firstname :  fullUserInfo.firstname,
-      //          lastname :  fullUserInfo.lastname,              
-      //       }
-      //    })
-      // })
-
+         console.log ('full info ', fullUserInfo);
+         store.setState ( {
+            user: {
+               id : userName,
+               email :  fullUserInfo.email,
+               firstname :  fullUserInfo.firstname,
+               lastname :  fullUserInfo.lastname,              
+            }
+         })
+         console.log(store.getState().user);
+      })
    })
-   
+}
+
+export function signOut () {
+  auth.signOut();
+  store.setState ( {
+     successLogin : false,
+     user: {
+        id :'',
+        email :  ''
+     }
+  })
+  console.log(store.getState().successLogin);
 }
