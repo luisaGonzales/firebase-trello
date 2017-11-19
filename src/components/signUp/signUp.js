@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import './signUp.css';
-import {NavLink} from 'react-router-dom';
+import {NavLink,Redirect} from 'react-router-dom';
 import {Form, FormGroup, FormControl, Col, Button, ControlLabel} from 'react-bootstrap';
-import {signUp} from '../../actions/actions'
+import {signUp, signOut} from '../../actions/actions'
+import {connect} from 'redux-zero/react';
 
-const SignUp = ({}) => {
+const SignUp = ({successLogin}) => {
     const onSubmit = (e) => {
         e.preventDefault();
         let correctPassword = false;
@@ -26,6 +27,9 @@ const SignUp = ({}) => {
     }
     return (
         <div className="background text-center">
+        {
+            successLogin && <Redirect to = "/boards"/>
+        }
             <Form horizontal onSubmit={onSubmit}>
                 <img src="https://phoenix-trello.herokuapp.com/images/logo-11ecccd65d1c7977997eb6f0bc0002ad.png?vsn=d" alt="logo" className="brandSU"/>
                 <FormGroup controlId="formHorizontalEmail">
@@ -57,11 +61,20 @@ const SignUp = ({}) => {
                         <FormControl className="inputSI" type="password" placeholder="Confirm Password" autoComplete="none" inputRef={ref => { this.confirmPassword = ref }}/>
                     </Col>
                 </FormGroup>
-
+                <p className="instruccions">*La contraseña debe contener por lo menos 6 caracteres.</p>
                 <FormGroup>
                     <Col smOffset={4} sm={4}>
                         <Button type="submit" className="btnSubmit">
-                            <NavLink to="/boards">Sign up</NavLink>
+                            Sign Up
+                        </Button>
+                    </Col>
+                    <Col smOffset={4} sm={4}>
+                        <Button type="button" className="btnSubmit" onClick={
+                            () => {
+                                console.log("click");
+                                signOut()}
+                        }>
+                            Sign Out
                         </Button>
                     </Col>
                 </FormGroup>
@@ -71,4 +84,6 @@ const SignUp = ({}) => {
     );
 }
 
-export default SignUp;
+
+const mapToProps = ({successLogin})  => ({successLogin}) 
+export default connect(mapToProps)(SignUp) ;
