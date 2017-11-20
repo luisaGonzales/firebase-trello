@@ -27,12 +27,6 @@ const Desk = ({successLogin, boards, user}) => {
                 !successLogin && <Redirect to = '/signIn' />
             }
             <Header name={user.firstname}/>
-            <Button type="button" 
-                className="btnSubmit" 
-                onClick={
-                    () => {signOut()}}>
-                Sign Out
-            </Button>
             <div>
             <ul>
                 {deskList}
@@ -51,7 +45,7 @@ const Desk = ({successLogin, boards, user}) => {
                     }
                 }>
                 <FormGroup controlId="formHorizontalEmail">
-                    <Col smOffset={4} sm={4}>
+                    <Col sm={4}>
                         <FormControl
                             className="inputSI"
                             type="text"
@@ -62,8 +56,8 @@ const Desk = ({successLogin, boards, user}) => {
                     </Col>
                 </FormGroup>
                 <FormGroup>
-                    <Col smOffset={4} sm={4}>
-                        <Button type="submit" className="btnSubmit">
+                    <Col sm={4}>
+                        <Button type="submit" className="btnSubmitDesk">
                             Add Board
                         </Button>
                     </Col>

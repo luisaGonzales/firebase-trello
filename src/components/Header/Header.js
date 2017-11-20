@@ -1,5 +1,5 @@
 import React from 'react'
-import {addStage, signOut} from '../../actions/actions'
+import {signOut} from '../../actions/actions'
 import './Header.css';
 import {Button, Row, Col } from 'react-bootstrap';
 import {Redirect, NavLink} from 'react-router-dom';
@@ -20,9 +20,12 @@ const Header = ({name}) => {
             <div className="btn headerElement">{name}</div>
         </Col>
         <Col xs={1} xsOffset={0} md={1} mdOffset={0}>
-            <div className="btn headerElement">
-                <NavLink to="/signin"><i className="fa fa-sign-out" aria-hidden="true"></i> Sign out</NavLink>
-            </div>
+
+            <Button onClick={
+                () => {signOut()}}
+                className="btn headerElement">
+                <i className="fa fa-sign-out" aria-hidden="true"></i> Sign out
+            </Button>
         </Col>
         </Row>
     );

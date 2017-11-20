@@ -4,3 +4,23 @@
         position: relative;
         height: 100vh;
 }
+
+.new
+{
+  background-color: #745286;  
+  color: #bdc3c7;
+  margin: 10px 0;  
+}
+.new:hover
+{
+  background-color: #6E4D7F;
+  color: #bdc3c7;  
+}
+
+.btnSubmitDesk {
+    background-color: #745286;  
+    color: #bdc3c7;
+    margin: 0 10%;  
+    width: 80%;
+    padding : 8px;
+}
