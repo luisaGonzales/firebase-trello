@@ -4,7 +4,7 @@ import './Desk.css';
 import {Button, Form, FormGroup, FormControl, Col} from 'react-bootstrap';
 import {connect} from 'redux-zero/react';
 import {Redirect} from 'react-router-dom';
-
+import Header from '../Header/Header';
 
 const TitleBoard = ({title}) =>  (
     <div>
@@ -12,7 +12,7 @@ const TitleBoard = ({title}) =>  (
     </div>
 ) ;
 
-const Desk = ({successLogin, boards}) => {
+const Desk = ({successLogin, boards, user}) => {
     const deskList = boards.map ( (board, index) => {
         return 
             <li key={index}>
@@ -26,6 +26,7 @@ const Desk = ({successLogin, boards}) => {
             {
                 !successLogin && <Redirect to = '/signIn' />
             }
+            <Header name={user.firstname}/>
             <Button type="button" 
                 className="btnSubmit" 
                 onClick={
@@ -72,5 +73,5 @@ const Desk = ({successLogin, boards}) => {
     );
 }
 
-const mapToProps = ({successLogin, boards}) => ({successLogin, boards})
-export default connect(mapToProps)(Desk)
+const mapToProps = ({successLogin, boards, user}) => ({successLogin, boards, user})
+export default connect(mapToProps)(Desk);

@@ -1,0 +1,18 @@
+.header
+{
+  background-color: #745286;
+}
+.headerElement, .headerElement>a
+{
+  background-color: #896C98;
+  color:rgba(255, 255, 255, 0.5);
+}
+.headerElement:hover, a:hover
+{
+  color: white;
+  text-decoration: none;
+}
+i
+{
+  color: white;
+}
