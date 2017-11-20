@@ -7,7 +7,7 @@ import {connect} from 'redux-zero/react';
 import {Redirect} from 'react-router-dom';
 
 const Board = ({stages, tasks, successLogin}) => {
-   const list = stages.map ( stage => {
+    const list = stages.map ( stage => {
       return <Stage  key={stage} title={stage} 
          tasks = {  tasks.filter ( e => e.stage === stage )}
       />
@@ -43,5 +43,5 @@ const Board = ({stages, tasks, successLogin}) => {
    ); 
 }
 
-const mapToProps = ({stages, tasks, successLogin}) => ({stages, tasks, successLogin});
+const mapToProps = ({successLogin}) => ({successLogin});
 export default connect (mapToProps)(Board);

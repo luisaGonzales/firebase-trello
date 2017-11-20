@@ -5,9 +5,9 @@ import {HashRouter, Route, Switch, Redirect} from 'react-router-dom'
 import Board from './components/Board/Board';
 import SignIn from './components/signIn/signIn';
 import SignUp from './components/signUp/signUp';
+import Desk from './components/BoardDesk/Desk';
 
-
-const App = ({stages, tasks}) => {
+const App = ({stages, tasks, boards, user}) => {
   return(
     <HashRouter>
       <Switch>
@@ -15,6 +15,7 @@ const App = ({stages, tasks}) => {
           <Route exact path="/signIn" render={() => <SignIn />} />
           <Route exact path="/signUp" render={() => <SignUp />} />
           <Route exact path="/boards" render={() => <Board stages={stages} tasks={tasks}/>} />
+          <Route exact path="/desk" render={() => <Desk boards={boards}/>} />
           <Route render={() => <Redirect to={"/"} />}/>
       </Switch>
     </HashRouter>
@@ -22,5 +23,5 @@ const App = ({stages, tasks}) => {
 }
 
 
-const mapToProps = ({stages, tasks})  => ({stages, tasks}) 
+const mapToProps = ({stages, tasks, boards, user })  => ({stages, tasks, boards, user}) 
 export default connect(mapToProps)(App);

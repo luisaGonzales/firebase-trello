@@ -68,8 +68,8 @@ export function signIn (email, password) {
               email :  fullUserInfo.email,
               firstname : fullUserInfo.firstname,
               lastname : fullUserInfo.lastname, 
-              stages : fullUserInfo.stages,
-              tasks : fullUserInfo.tasks            
+              // stages : fullUserInfo.stages,
+              // tasks : fullUserInfo.tasks            
            }
         })
      })
@@ -130,4 +130,8 @@ export function signOut () {
      }
   })
   console.log(store.getState().successLogin);
+}
+
+export function addBoard () {
+  console.log("work")
 }
