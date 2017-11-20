@@ -1,41 +1,76 @@
 import store from '../store/store'
 import firebase, {auth, database} from './firebase';
 
-export function readBoard () {
-   firebase.database().ref('users/stages').on ('value', res => {
-      let stages = []
-      res.forEach ( snap  => {
-         const stage = snap.val();
-         stages.push (stage);
+export function readBoard(user) {
+  firebase.database().ref(user + '/boards').on('value', res => {
+      let stages = [];
+      res.forEach(snap => {
+          const stage = snap.val();
+          stages.push(stage);
       })
-      store.setState ({
-         stages : stages
-      }) 
-   });
+      console.log(stages);
+      store.setState({
+          boards: stages
+      })
+  });
+}
 
-   firebase.database().ref('tasks').on ('value', res => {
-      let tasks = [];
-      res.forEach ( snap  => {
-          const task = snap.val();
-          tasks.push (task)
-      })      
-      store.setState ({
-         tasks : tasks
-      }) 
-   });   
+export const probando = () => {
+  firebase.auth().onAuthStateChanged(usuario => {
+      if (usuario) {
+          console.log('si');
+          firebase.database().ref('users/' + usuario.uid).once('value').then(res => {
+              const fullUserInfo = res.val();
+              store.setState({
+                  user: {
+                      id: 'users/' + usuario.uid,
+                      name: fullUserInfo.firstName,
+                      lastName: fullUserInfo.lastName
+                  }
+              })
+              console.log('full info ', fullUserInfo);
 
+          })
+          readBoard('users/' + usuario.uid);
+      } else {
+          console.log('no')
+      }
+  });
+  auth.onAuthStateChanged(user => {
+    if (user) {
+       console.log('user', user);
+  
+       let usersRef = database.ref('/users');
+       let userRef = usersRef.child(user.uid).toJSON();
+       store.setState ( {
+          successLogin : true
+       });
+    }
+  });
+}
 
+export function addBoard (value) {
+  let user = store.getState().user;
+  let userName = user.email.split("@")[0];
+  console.log("useeer", user);
+  let boards = [...store.getState().boards];
+  console.log("board", boards);
+  let newBoard = {
+    name: value,
+    id: boards.length + '-' + value
+}
+firebase.database().ref('users/' + userName + '/boards/' + newBoard.id).set(newBoard);
 }
 
 export function  addStage (text) {
-
-   let stages = [...store.getState().stages];
-   stages.push (  text )
-   /*store.setState ({
-      stages : stages
-   })  */
-
-   firebase.database().ref('stages').push (text);
+  let stages = [...store.getState().stages];
+  stages.push (  text ); 
+  let user = store.getState().user;
+  /*store.setState ({
+     stages : stages
+  })  */
+  let userName = user.email.split("@")[0];
+  firebase.database().ref('users/' + userName + '/stages').set(text);
 }
 
 export function  addTask (stage, text) {
@@ -67,25 +102,14 @@ export function signIn (email, password) {
               id : userName,
               email :  fullUserInfo.email,
               firstname : fullUserInfo.firstname,
-              lastname : fullUserInfo.lastname, 
-              // stages : fullUserInfo.stages,
-              // tasks : fullUserInfo.tasks            
+              lastname : fullUserInfo.lastname,           
            }
         })
      })
   })
 }
 
-auth.onAuthStateChanged(user => {
-  if (user) {
-     console.log('user', user);
-     let usersRef = database.ref('/users');
-     let userRef = usersRef.child(user.uid);
-     store.setState ( {
-        successLogin : true
-     })
-  }
-});
+
 
 export function signUp (firstname, lastname, email, password) {
    console.log ('signUp' , firstname, lastname, email, password);
@@ -124,14 +148,14 @@ export function signOut () {
   auth.signOut();
   store.setState ( {
      successLogin : false,
+     boards : [],
+     stages : [],
+     tasks : [],
      user: {
         id :'',
-        email :  ''
+        email :  '', 
      }
   })
   console.log(store.getState().successLogin);
 }
 
-export function addBoard () {
-  console.log("work")
-}

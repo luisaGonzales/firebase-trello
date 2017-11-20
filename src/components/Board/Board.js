@@ -9,7 +9,7 @@ import {Redirect} from 'react-router-dom';
 const Board = ({stages, tasks, successLogin}) => {
     const list = stages.map ( stage => {
       return <Stage  key={stage} title={stage} 
-         tasks = {  tasks.filter ( e => e.stage === stage )}
+        //  tasks = {  tasks.filter ( e => e.stage === stage )}
       />
    });
 

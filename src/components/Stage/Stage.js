@@ -10,9 +10,7 @@ class Stage  extends React.Component{
       return  (
          <div>
                <h3> {this.props.title}</h3>
-
                {list}
-
             <form onSubmit = { (e) => {
                e.preventDefault();
                console.log ('this.taskInputRef.value', this.taskInputReference.value)
