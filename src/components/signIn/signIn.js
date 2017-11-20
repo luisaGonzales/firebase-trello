@@ -9,9 +9,8 @@ const SignIn = ({successLogin}) => {
     return (
         <div className="background text-center">
             {
-                successLogin && <Redirect to="boards"/> }
+                successLogin && <Redirect to="boards"/> 
             }
-
             <Form
                 horizontal
                 onSubmit=

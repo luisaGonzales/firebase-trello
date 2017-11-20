@@ -68,22 +68,12 @@ const SignUp = ({successLogin}) => {
                             Sign Up
                         </Button>
                     </Col>
-                    <Col smOffset={4} sm={4}>
-                        <Button type="button" className="btnSubmit" onClick={
-                            () => {
-                                console.log("click");
-                                signOut()}
-                        }>
-                            Sign Out
-                        </Button>
-                    </Col>
                 </FormGroup>
                 <NavLink className="navlinkSI" to="/signIn">Sign In</NavLink>
             </Form>
         </div>
     );
 }
-
 
 const mapToProps = ({successLogin})  => ({successLogin}) 
 export default connect(mapToProps)(SignUp) ;
