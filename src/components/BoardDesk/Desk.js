@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {signOut, addBoard} from '../../actions/actions';
+import {signOut, addBoard, selected} from '../../actions/actions';
 import './Desk.css';
 import {Button, Form, FormGroup, FormControl, Col} from 'react-bootstrap';
 import {connect} from 'redux-zero/react';
@@ -8,19 +8,23 @@ import Header from '../Header/Header';
 
 const TitleBoard = ({title}) =>  (
     <div>
-       <div>  {title} </div>
+       <div onClick={
+           () => {
+               selected(title);
+           }
+       }>  {title} </div>
     </div>
-) ;
+);
 
 const Desk = ({successLogin, boards, user}) => {
-    const deskList = boards.map ( (board, index) => {
-        return 
+    const deskList = boards.map ((board, index) => {
+        return (
             <li key={index}>
-                <TitleBoard title={board.name}  />
+                <TitleBoard title={board.name} />
             </li>
-        
-     });
-
+        );   
+    });
+    console.log(deskList);
     return (
         <div className="desk">
             {

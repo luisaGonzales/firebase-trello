@@ -34,6 +34,7 @@ export function readAllBoards (userName) {
     store.setState({
       boards: boards
     });
+    console.log("store", store.getState().boards);
   });
   console.log("store" ,store.getState().boards);
 
@@ -54,13 +55,6 @@ export const readBoard = () => {
   });
 }
 
-export function  addStage (text) {
-  let stages = [...store.getState().stages];
-  let userId = store.getState().user.id;
-  stages.push(text);
-  firebase.database().ref('users/' + userId + '/stages').push (text);
-}
-
 export function addBoard (value) {
   let userName = store.getState().user.id;
   let boards = [...store.getState().boards];
@@ -68,13 +62,23 @@ export function addBoard (value) {
   console.log("boa" , boards);
   let newBoard = {
     name: value,
-    id: boards.length + '-' + value, 
-
+    id: boards.length, 
   }
   firebase.database().ref('users/' + userName + '/boards/' + newBoard.id).set(newBoard);
 }
 
-
+export function  addStage (text) {
+  let stages = [...store.getState().stages];
+  let boards = [...store.getState().boards];
+  let userId = store.getState().user.id;
+  console.log("user", userId);
+  let newStage = {
+    name : text, 
+    id : boards.length + '-' + text,
+    stage : boards.length,
+  }
+  firebase.database().ref('users/' + userId + '/stages/').push (newStage);
+}
 
 export function  addTask (stage, text) {
   let tasks = [...store.getState().tasks];
