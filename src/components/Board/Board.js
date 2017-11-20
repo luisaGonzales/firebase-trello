@@ -20,7 +20,7 @@ const Board = ({stages, tasks, successLogin, user}) => {
       {
         !successLogin && <Redirect to='/signIn'/>
       }
-      <Header name={"ol"}/>
+      <Header name={user.firstname}/>
       <div className="Board-column">
         {list}
       </div>
@@ -34,7 +34,7 @@ const Board = ({stages, tasks, successLogin, user}) => {
           }}>
           <input type="text" ref= {e => this.stageInputRef = e} className="inputSI"/>
           <button type="submit">
-            save list
+            Save list
           </button>
         </form>
       </div>

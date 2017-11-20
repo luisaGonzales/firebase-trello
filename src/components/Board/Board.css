@@ -42,3 +42,16 @@
       width: 80%;
       padding : 8px;
   }
+
+  
+.inputSI{
+  border-radius: 3px;
+  box-shadow: none;
+  line-height: 1.2em;
+  font-size: 1.1em;
+  border: 0px none;
+  padding: 1.5em;
+  font-size: 1.2em;
+  margin: 0 auto;
+  width: 80%;
+}
