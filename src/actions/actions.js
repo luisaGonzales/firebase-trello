@@ -61,22 +61,22 @@ export function addBoard (value) {
   console.log("boa" , boards);
   let newBoard = {
     name: value,
-    id: boards.length, 
+    id: boards.length + '-' + value, 
   }
   firebase.database().ref('users/' + userName + '/boards/' + newBoard.id).set(newBoard);
 }
 
 export function  addStage (text) {
   let stages = [...store.getState().stages];
-  let boards = [...store.getState().boards];
   let userId = store.getState().user.id;
+  let boards = store.getState().boards;
   console.log("user", userId);
   let newStage = {
-    name : text, 
-    id : boards.length + '-' + text,
-    board : boards.length,
+    id : boards.length + '-' + text, 
+    name : text
   }
-  firebase.database().ref('users/' + userId + '/stages').push (newStage);
+  stages.push(text);
+  firebase.database().ref('users/' + userId + '/stages').push (text);
 }
 
 export function  addTask (stage, text) {
