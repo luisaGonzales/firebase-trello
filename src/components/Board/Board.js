@@ -27,22 +27,17 @@ const Board = ({stages, tasks, successLogin, user}) => {
       <div className="Board-column">
         <form
           onSubmit=
-          { (e) => { e.preventDefault(); addStage (this.stageInputRef.value); }}>
-          <input type="text" ref= {e => this.stageInputRef = e}/>
+          { (e) => { 
+            e.preventDefault(); 
+            addStage (this.stageInputRef.value);
+            this.stageInputRef.value = ""; 
+          }}>
+          <input type="text" ref= {e => this.stageInputRef = e} className="inputSI"/>
           <button type="submit">
             save list
           </button>
         </form>
       </div>
-      <Button
-        type="button"
-        className="btnSubmit"
-        onClick={() => {
-        console.log("click");
-        signOut()
-      }}>
-        Sign Out
-      </Button>
     </div>
   );
 }

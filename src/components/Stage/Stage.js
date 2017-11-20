@@ -15,6 +15,7 @@ class Stage  extends React.Component{
                e.preventDefault();
                console.log ('this.taskInputRef.value', this.taskInputReference.value)
                addTask (this.props.title, this.taskInputReference.value);
+               this.taskInputReference.value = "";
             }}>
                <input type="text" ref = {e => this.taskInputReference = e}/>
                <button type="submit">

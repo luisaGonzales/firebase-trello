@@ -14,11 +14,31 @@
     width: 100%;
     max-width: 200px;
     padding: 0 10px 0px 10px;
-    top: 150px;
-    position: relative;
+    top: 80px;
+    position: absolute;
   }
   
   .Board-column > .Create-container {
     margin-top: 30px;
     height: 100%;
+  }
+
+  .new
+  {
+    background-color: #745286;  
+    color: #bdc3c7;
+    margin: 10px 0;  
+  }
+  .new:hover
+  {
+    background-color: #6E4D7F;
+    color: #bdc3c7;  
+  }
+  
+  .btnSubmitDesk {
+      background-color: #745286;  
+      color: #bdc3c7;
+      margin: 0 10%;  
+      width: 80%;
+      padding : 8px;
   }

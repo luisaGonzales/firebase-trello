@@ -101,7 +101,6 @@ export function signIn (email, password) {
           lastname : fullUserInfo.lastname,           
         }
       });
-      readBoard();
     });
   });
 }
