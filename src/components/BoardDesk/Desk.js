@@ -43,7 +43,7 @@ const Desk = ({successLogin, boards, user}) => {
                         e.preventDefault(); 
                         if(this.board)
                         {  
-                            addBoard(this.board.value);
+                            addBoard(this.board.value, user.id);
                             this.board.value = "";
                         } 
                     }

@@ -34,7 +34,6 @@ export function readAllBoards (userName) {
     store.setState({
       boards: boards
     });
-    console.log("store", store.getState().boards);
   });
   console.log("store" ,store.getState().boards);
 
@@ -61,9 +60,8 @@ export function addBoard (value) {
   console.log("user", userName);
   console.log("boa" , boards);
   let newBoard = {
+    name: value,
     id: boards.length, 
-    title: value,
-    userId : 
   }
   firebase.database().ref('users/' + userName + '/boards/' + newBoard.id).set(newBoard);
 }
@@ -76,9 +74,9 @@ export function  addStage (text) {
   let newStage = {
     name : text, 
     id : boards.length + '-' + text,
-    stage : boards.length,
+    board : boards.length,
   }
-  firebase.database().ref('users/' + userId + '/stages/').push (newStage);
+  firebase.database().ref('users/' + userId + '/stages').push (newStage);
 }
 
 export function  addTask (stage, text) {
