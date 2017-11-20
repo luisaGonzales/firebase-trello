@@ -1,10 +1,11 @@
 import store from '../store/store'
 import firebase, {auth, database} from './firebase';
 
-export function readBoard () {
-  let user = "luisa";
-  // store.getState().user.email.split("@")[0];
-   firebase.database().ref('users/luisa/stages').on ('value', res => {
+export function readBoard1 () {
+  // let userName = "luisa"
+  let userName = store.getState().userName;
+  console.log("username" , userName);
+   firebase.database().ref('users/'+ userName +'/stages').on ('value', res => {
       let stages = []
       res.forEach ( snap  => {
          const stage = snap.val();
@@ -15,7 +16,7 @@ export function readBoard () {
       }) 
    });
 
-   firebase.database().ref('users/luisa/tasks').on ('value', res => {
+   firebase.database().ref('users/' + userName + '/tasks').on ('value', res => {
       let tasks = [];
       res.forEach ( snap  => {
           const task = snap.val();
@@ -26,9 +27,7 @@ export function readBoard () {
       }) 
    });  
    
-
-     console.log("read" + user);
-     firebase.database().ref('users/luisa/boards').on('value', res => {
+     firebase.database().ref('users/' + userName + '/boards').on('value', res => {
          let stages = [];
          res.forEach(snap => {
              const stage = snap.val();
@@ -41,22 +40,6 @@ export function readBoard () {
      });
 }
 
-// export function readBoard() {
-//   let user = "luisa";
-//   // store.getState().user.email.split("@")[0];
-//   console.log("read" + user);
-//   firebase.database().ref('users/luisa/boards').on('value', res => {
-//       let stages = [];
-//       res.forEach(snap => {
-//           const stage = snap.val();
-//           stages.push(stage);
-//       })
-//       console.log("stages" , stages); 
-//       store.setState({
-//           boards: stages
-//       });
-//   });
-// }
 
 // export const readBoard = () => {
 //   firebase.auth().onAuthStateChanged(user => {
@@ -82,15 +65,23 @@ export function readBoard () {
 //   });
 // }
 
-auth.onAuthStateChanged(user => {
-  if (user) {
-     let usersRef = database.ref('/users');
-     let userRef = usersRef.child(user.uid);
-     store.setState ( {
-        successLogin : true
-     });
-  }
-});
+export const readBoard = () => {
+  auth.onAuthStateChanged(user => {
+    console.log(user);
+    if (user) {
+       let usersRef = database.ref('/users');
+       let userRef = usersRef.child(user.uid);
+
+       store.setState ({
+          userName : user.email.split("@")[0],
+          successLogin : true
+       });
+       readBoard1();
+      }
+  });
+}
+
+
 
 export function addBoard (value) {
   let user = store.getState().user;
@@ -106,27 +97,22 @@ firebase.database().ref('users/' + userName + '/boards/' + newBoard.id).set(newB
 }
 
 export function  addStage (text) {
-  
-     let stages = [...store.getState().stages];
-     stages.push (  text )
-     /*store.setState ({
-        stages : stages
-     })  */
-  
-     firebase.database().ref('users/luisa/stages').push (text);
-  }
+  let stages = [...store.getState().stages];
+  stages.push (  text )
+  console.log("addsta" + store.getState().user);
+  firebase.database().ref('users/luisa/stages').push (text);
+}
 
-  export function  addTask (stage, text) {
-    console.log ('addTask:', stage + ' - ' +  text);
-    let tasks = [...store.getState().tasks];
-    console.log("storetask", task);
-    let newTask = {
-       id : store.getState().tasks.length,
-       title: text,
-       stage : stage
-    } 
- 
-    firebase.database().ref('users/luisa/tasks' + newTask.id ).set (newTask);
+export function  addTask (stage, text) {
+  console.log ('addTask:', stage + ' - ' +  text);
+  let tasks = [...store.getState().tasks];
+  console.log("storetask", tasks);
+  let newTask = {
+    id : store.getState().tasks.length,
+    title: text,
+    stage : stage
+  } 
+  firebase.database().ref('users/luisa/tasks/' + newTask.id ).set (newTask);
     /*
     store.setState ({
        tasks : tasks
@@ -191,6 +177,7 @@ export function signOut () {
      boards : [],
      stages : [],
      tasks : [],
+     userName : "",
      user: {
         id :'',
         email :  '', 

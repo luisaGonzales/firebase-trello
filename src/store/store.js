@@ -5,6 +5,7 @@ const initialState = {
    tasks: [ ],
    boards : [], 
    successLogin : false, 
+   userName : null,
    user : {
        id : null, 
        email : null,
