@@ -2,39 +2,38 @@ import store from '../store/store'
 import firebase, {auth, database} from './firebase';
 
 export function readAllBoards (userName) {
-   firebase.database().ref('users/'+ userName +'/stages').on ('value', res => {
+  firebase.database().ref('users/'+ userName +'/stages').on ('value', res => {
     let stages = [];
     res.forEach ( snap  => {
-         const stage = snap.val();
-         stages.push (stage);
-      });
-      store.setState ({
-         stages : stages
-      }) 
+      const stage = snap.val();
+      stages.push (stage);
+    });
+    store.setState ({
+      stages : stages
+    }); 
   });
 
-   firebase.database().ref('users/' + userName + '/tasks').on ('value', res => {
-      let tasks = [];
-      res.forEach ( snap  => {
-          const task = snap.val();
-          tasks.push (task)
-      })      
-      store.setState ({
-         tasks : tasks
-      }) 
-   });  
+  firebase.database().ref('users/' + userName + '/tasks').on ('value', res => {
+    let tasks = [];
+    res.forEach ( snap  => {
+      const task = snap.val();
+      tasks.push (task)
+    });
+    store.setState ({
+      tasks : tasks
+    }); 
+  });  
    
-     firebase.database().ref('users/' + userName + '/boards').on('value', res => {
-         let stages = [];
-         res.forEach(snap => {
-             const stage = snap.val();
-             stages.push(stage);
-         })
-         console.log("stages" , stages); 
-         store.setState({
-             boards: stages
-         });
-     });
+  firebase.database().ref('users/' + userName + '/boards').on('value', res => {
+    let stages = [];
+    res.forEach(snap => {
+    const stage = snap.val();
+      stages.push(stage);
+    });
+    store.setState({
+      boards: stages
+    });
+  });
 }
 
 export const readBoard = () => {
