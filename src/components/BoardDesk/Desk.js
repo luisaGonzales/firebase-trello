@@ -16,7 +16,7 @@ const Desk = ({successLogin, boards}) => {
     const deskList = boards.map ( (board, index) => {
         return 
             <li key={index}>
-                <TitleBoard title={board}  />
+                <TitleBoard title={board.name}  />
             </li>
         
      });

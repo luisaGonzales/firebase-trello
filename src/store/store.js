@@ -3,9 +3,8 @@ import createStore from 'redux-zero'
 const initialState = {
    stages: [ ],
    tasks: [ ],
-   boards : [], 
+   boards : [ ], 
    successLogin : false, 
-   userName : null,
    user : {
        id : null, 
        email : null,
