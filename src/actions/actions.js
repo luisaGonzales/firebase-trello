@@ -58,14 +58,13 @@ export function  addTask (stage, text) {
 
 export function signIn (email, password) {
   auth.signInWithEmailAndPassword(email, password).then (userObj => {
-
-     database.ref ('users/' + userObj.uid).once ('value').then ( res => {
+    let userName = email.split("@")[0];
+     database.ref ('users/' + userName).once ('value').then ( res => {
         const fullUserInfo = res.val(); 
         console.log ('full info ', fullUserInfo);
-        console.log(fullUserInfo.email.split("@"))
         store.setState ( {
            user: {
-              id : userObj.uid,
+              id : userName,
               email :  fullUserInfo.email,
               firstname : fullUserInfo.firstname,
               lastname : fullUserInfo.lastname, 

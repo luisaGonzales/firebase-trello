@@ -2,11 +2,16 @@ import React, {Component} from 'react';
 import './signIn.css';
 import {Redirect, NavLink} from 'react-router-dom';
 import {Form, FormGroup, FormControl, Col, Button, ControlLabel, Alert} from 'react-bootstrap';
-import {signIn} from '../../actions/actions'
+import {signIn} from '../../actions/actions';
+import {connect} from 'redux-zero/react';
 
-const SignIn = ({}) => {
+const SignIn = ({successLogin}) => {
     return (
         <div className="background text-center">
+            {
+                successLogin && <Redirect to="boards"/> }
+            }
+
             <Form
                 horizontal
                 onSubmit=
@@ -68,4 +73,5 @@ const SignIn = ({}) => {
     );
 }
 
-export default SignIn;
+const mapToProps = ({successLogin}) => ({successLogin});
+export default connect (mapToProps)(SignIn);
