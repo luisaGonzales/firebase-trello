@@ -10,7 +10,7 @@ const initialState = {
        email : null,
        password : null, 
        firstname : null,
-       lastname : null, 
+       lastname : null
    }
 };
 

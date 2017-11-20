@@ -9,7 +9,7 @@ const SignIn = ({successLogin}) => {
     return (
         <div className="background text-center">
             {
-                successLogin && <Redirect to="desk"/> 
+                successLogin && <Redirect to="/desk"/> 
             }
             <Form
                 horizontal

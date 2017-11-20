@@ -7,18 +7,22 @@ import {Redirect} from 'react-router-dom';
 
 
 const TitleBoard = ({title}) =>  (
-    <div className = 'Task-container'>
-       <div className='Task-title'>  {title} </div>
+    <div>
+       <div>  {title} </div>
     </div>
 ) ;
 
 const Desk = ({successLogin, boards}) => {
-    const deskList = boards.map ( board => {
-        return <TitleBoard title={board} />
+    const deskList = boards.map ( (board, index) => {
+        return 
+            <li key={index}>
+                <TitleBoard title={board}  />
+            </li>
+        
      });
 
     return (
-        <div>
+        <div className="desk">
             {
                 !successLogin && <Redirect to = '/signIn' />
             }
@@ -29,7 +33,9 @@ const Desk = ({successLogin, boards}) => {
                 Sign Out
             </Button>
             <div>
+            <ul>
                 {deskList}
+            </ul>
             </div>
             <Form
                 horizontal
@@ -66,5 +72,5 @@ const Desk = ({successLogin, boards}) => {
     );
 }
 
-const mapToProps = ({successLogin}) => ({successLogin})
+const mapToProps = ({successLogin, boards}) => ({successLogin, boards})
 export default connect(mapToProps)(Desk)
