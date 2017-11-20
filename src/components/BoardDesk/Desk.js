@@ -10,7 +10,7 @@ const TitleBoard = ({title}) =>  (
     <div>
        <div onClick={
            () => {
-               selected(title);
+               console.log(title);
            }
        }>  {title} </div>
     </div>

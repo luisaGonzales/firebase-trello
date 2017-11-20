@@ -61,8 +61,9 @@ export function addBoard (value) {
   console.log("user", userName);
   console.log("boa" , boards);
   let newBoard = {
-    name: value,
     id: boards.length, 
+    title: value,
+    userId : 
   }
   firebase.database().ref('users/' + userName + '/boards/' + newBoard.id).set(newBoard);
 }
