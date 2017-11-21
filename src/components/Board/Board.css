@@ -48,5 +48,17 @@
   background: rgba(222, 225, 227, 0.9);
   border-radius: 3px;
   padding: 0.75em;
-  cursor: -webkit-grab;
+  margin-top: 20px;
+}
+
+.buttonBoard{
+  transition: all 0.15s ease-out 0s;
+  background: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+  width: 100%;
+  padding: 0.5em;
+  font-size: 1.1em;
+  font-weight: 600;
+  margin-top: 2px;
 }

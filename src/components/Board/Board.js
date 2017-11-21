@@ -9,16 +9,19 @@ import Header from '../Header/Header';
 
 const Board = ({boards, successLogin, boardSelect, user }) => {
   let  list = null;
-  if (boards[boardSelect].stages) 
+  console.log("stages", boards[boardSelect].stages);
+  if ((boards[boardSelect].stages))  {
     list = boards[boardSelect].stages.map((stage, index) => {
-    return <Stage
-      key={index}
-      board={stage} 
-      index={index} 
-      boardSelect={boardSelect} 
-      successLogin={successLogin}
-      />
-  });
+      return <Stage
+        key={index}
+        board={stage} 
+        index={index} 
+        boardSelect={boardSelect} 
+        successLogin={successLogin}
+        />
+    });
+  }
+    
   return (
     <div className="Board-container">
       {
@@ -34,6 +37,7 @@ const Board = ({boards, successLogin, boardSelect, user }) => {
         horizontal
         onSubmit = {(e) => {
           e.preventDefault();
+          console.log("boardselec",boardSelect);
           addStage(boardSelect, this.stageInputRef.value);
           this.stageInputRef.value = "";
         }}>
@@ -44,8 +48,8 @@ const Board = ({boards, successLogin, boardSelect, user }) => {
             inputRef = {e => this.stageInputRef = e} className="inputBoard"
           />
           <FormGroup>
-            <Col smOffset={4} sm={4}>
-              <Button type="submit" className="btnSubmit">
+            <Col>
+              <Button type="submit" className="buttonBoard">
                 Add Stage
               </Button>
             </Col>
