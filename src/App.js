@@ -13,7 +13,7 @@ const App = ({boards, successLogin, boardSelect, user})=> {
       <Switch>
           <Route exact path="/" render={() => <SignIn successLogin={successLogin}/>} />
           <Route exact path="/signIn" render={() => <SignIn successLogin={successLogin}/>} />
-          <Route exact path="/signUp" render={() => <SignUp />} />
+          <Route exact path="/signUp" render={() => <SignUp successLogin={successLogin}/>} />
           <Route exact path="/desk" render={() => <Desk boards={boards} />} />
           <Route exact path="/boards" render={() => <Board boards={boards} />} />
           <Route render={() => <Redirect to={"/"} />}/>

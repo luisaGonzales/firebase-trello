@@ -75,5 +75,4 @@ const SignUp = ({successLogin}) => {
     );
 }
 
-const mapToProps = ({successLogin})  => ({successLogin}) 
-export default connect(mapToProps)(SignUp) ;
+export default SignUp ;
