@@ -8,7 +8,9 @@ import {Redirect} from 'react-router-dom';
 import Header from '../Header/Header';
 
 const Board = ({boards, successLogin, boardSelect, user }) => {
-  const list = boards[boardSelect].stages.map((stage, index) => {
+  let  list = null;
+  if (boards[boardSelect].stages) 
+    list = boards[boardSelect].stages.map((stage, index) => {
     return <Stage
       key={index}
       board={stage} 

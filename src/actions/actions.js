@@ -3,23 +3,7 @@ import firebase, {auth, database} from './firebase';
 
 export function signUp (firstname, lastname, email, password) {
   console.log ('signUp' , firstname, lastname, email, password);
-  auth.createUserWithEmailAndPassword (email, password).then ( user => {
-    let newuser = {firstname, lastname, email, password}
-    database.ref ('users/' + user.uid).set (newuser);  
-    database.ref ('users/' + user.uid).once ('value').then ( res => {
-      const fullUserInfo = res.val();
-      console.log ('full info ', fullUserInfo);
-      store.setState ( {
-        user: {
-          id : user.uid,
-          email :  fullUserInfo.email,
-          firstname :  fullUserInfo.firstname,
-          lastname :  fullUserInfo.lastname,              
-        }
-      });
-      console.log("SUuser", store.getState().user);
-    });
-  });
+  auth.createUserWithEmailAndPassword (email, password);
 }
 
 export function signOut () {
@@ -36,13 +20,21 @@ export function signOut () {
 }
 
 export function signIn (email, password) {
-  auth.signInWithEmailAndPassword(email, password).then (userObj => {
-    database.ref ('users/' + userObj.uid).once ('value').then ( res => {
+  auth.signInWithEmailAndPassword(email, password);
+}
+
+auth.onAuthStateChanged(user => {
+  if (user) {
+    let usersRef = database.ref('/users');
+    let userRef = usersRef.child(user.uid);
+    
+    database.ref ('users/' + user.uid).once ('value').then ( res => {
       const fullUserInfo = res.val(); 
       console.log ('full info ', fullUserInfo);
       store.setState ( {
+        successLogin : true,
         user: {
-          id : userObj.uid,
+          id : user.uid,
           email :  fullUserInfo.email,
           firstname : fullUserInfo.firstname,
           lastname : fullUserInfo.lastname,
@@ -50,16 +42,23 @@ export function signIn (email, password) {
         }
       });
       console.log("SIuser", store.getState().user);
+      readBoard();
     });
-  });
-}
+   
+    console.log("ruta", 'users/'+ user.uid +'/boards/');
 
-auth.onAuthStateChanged(user => {
-  if (user) {
-    let usersRef = database.ref('/users');
-    let userRef = usersRef.child(user.uid);
-    store.setState ({
-      successLogin : true
+    firebase.database().ref('users/'+ user.uid +'/boards/').on('value', res => {
+      let boards = [];
+      res.forEach ( snap  => {
+        let board = snap.val();
+        board.id = snap.key
+        boards.push (board);
+      });
+      console.log("newboard", boards);
+      store.setState ({
+        boards : boards
+      }); 
+
     });
   }
 });
@@ -108,42 +107,45 @@ export const viewBoard = (index) => {
 }
 
 export function readBoard(){
-  let newBoards = [];
-  firebase.database().ref('users/' + store.getState().user.id +'/boards').on('value', res => {
-    console.log("read", res);
-    res.forEach( snap => {
-      const board = snap.val();
-      console.log("boardsnap",board);
-      let newStages = [];
-        firebase.database().ref('users/' + store.getState().user.id +'/boards/' + board.id + '/stages/').on('value', res => {
-          res.forEach( snap  => {
-            const stage = snap.val();
-            let newTasks =[];
-            firebase.database().ref('users/' + store.getState().user.id + '/boards/' + board.id + '/stages/' + stage.id + '/tasks/').on ('value',res => {
-              res.forEach(snap => {
-                const task = snap.val();
-                newTasks.push(task);
-              });
-            });
-            newStages.push({
-              id : stage.id,
-              name : stage.name,
-              tasks : newTasks
-            });
-          });
-        });        
-      newBoards.push({
-        id : board.id,
-        name : board.name,
-        stages : newStages
-      });   
-    }); 
-    console.log("newboards", newBoards)
-    store.setState({
-      boards : newBoards,
-    }); 
-    console.log("store", store.getState().boards);
-  });
+
+  // let newBoards = [];
+  // console.log("readSTORE", store.getState().user.id);
+  // firebase.database().ref('users/' + store.getState().user.id +'/boards').on('value', res => {
+  //   console.log("read", res);
+  //   res.forEach( snap => {
+  //     const board = snap.val();
+  //     console.log("boardsnap",board);
+  //     let newStages = [];
+  //       firebase.database().ref('users/' + store.getState().user.id +'/boards/' + board.id + '/stages/').on('value', res => {
+  //         res.forEach( snap  => {
+  //           const stage = snap.val();
+  //           let newTasks =[];
+  //           firebase.database().ref('users/' + store.getState().user.id + '/boards/' + board.id + '/stages/' + stage.id + '/tasks/').on ('value',res => {
+  //             res.forEach(snap => {
+  //               const task = snap.val();
+  //               newTasks.push(task);
+  //             });
+  //           });
+  //           newStages.push({
+  //             id : stage.id,
+  //             name : stage.name,
+  //             tasks : newTasks
+  //           });
+  //         });
+  //       });        
+  //     newBoards.push({
+  //       id : board.id,
+  //       name : board.name,
+  //       stages : newStages
+  //     });   
+  //   }); 
+  //   console.log("newboards", newBoards)
+  //   store.setState({
+  //     boards : newBoards,
+  //   }); 
+  //   console.log("store", store.getState().boards);
+  // });
+  // newBoards = [];
 }
 
 // export const readBoard = () => {
@@ -196,16 +198,16 @@ export function readBoard(){
 // }
 
 // export function readAllBoards (userName) {
-//   firebase.database().ref('users/'+ userName +'/stages').on ('value', res => {
-//     let stages = [];
-//     res.forEach ( snap  => {
-//       const stage = snap.val();
-//       stages.push (stage);
-//     });
-//     store.setState ({
-//       stages : stages
-//     }); 
-//   });
+  // firebase.database().ref('users/'+ userName +'/stages').on ('value', res => {
+  //   let stages = [];
+  //   res.forEach ( snap  => {
+  //     const stage = snap.val();
+  //     stages.push (stage);
+  //   });
+  //   store.setState ({
+  //     stages : stages
+  //   }); 
+  // });
 
 //   firebase.database().ref('users/' + userName + '/tasks').on ('value', res => {
 //     let tasks = [];
