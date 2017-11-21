@@ -53,43 +53,6 @@ export function signIn (email, password) {
   });
 }
 
-export function readAllBoards (userName) {
-  firebase.database().ref('users/'+ userName +'/stages').on ('value', res => {
-    let stages = [];
-    res.forEach ( snap  => {
-      const stage = snap.val();
-      stages.push (stage);
-    });
-    store.setState ({
-      stages : stages
-    }); 
-  });
-
-  firebase.database().ref('users/' + userName + '/tasks').on ('value', res => {
-    let tasks = [];
-    res.forEach ( snap  => {
-      const task = snap.val();
-      tasks.push (task)
-    });
-    store.setState ({
-      tasks : tasks
-    }); 
-  });  
-   
-  firebase.database().ref('users/' + userName + '/boards').on('value', res => {
-    let boards = [];
-    res.forEach(snap => {
-      let board = snap.val();
-      boards.push(board);
-    });
-    console.log("boards ",boards)
-    store.setState({
-      boards: boards
-    });
-  });
-  console.log("store" ,store.getState().boards);
-}
-
 auth.onAuthStateChanged(user => {
   if (user) {
     let usersRef = database.ref('/users');
@@ -141,20 +104,55 @@ export const viewBoard = (index) => {
   console.log("storeIndex", store.getState().boardSelect);
 }
 
-
-
-export const readBoard = () => {
-  auth.onAuthStateChanged(user => {
-    if (user) {
-      let usersRef = database.ref('/users');
-      let userRef = usersRef.child(user.uid);
-      store.setState ({
-        successLogin : true
-      });
-      readAllBoards(userRef);
-    }
+export function readBoards(){
+  let newBoards = [];
+  firebase.database().ref('users/' + store.getState().user.id +'/boards/').on('value', res => {
+    res.forEach( snap => {
+      const board = snap.val();
+      let newStages = [];
+        firebase.database().ref('users/' + store.getState().user.id +'/boards/' + board.id + '/stages/').on('value', res => {
+          res.forEach( snap  => {
+            const stage = snap.val();
+            let newTasks =[];
+            firebase.database().ref('users/' + store.getState().user.id + '/boards/' + board.id + '/stages/' + stage.id + '/tasks/').on('value',res => {
+              res.forEach(snap => {
+                const task = snap.val();
+                newTasks.push(task);
+              });
+            });
+            newStages.push({
+              id : stage.id,
+              name : stage.name,
+              tasks : newTasks
+            });
+          });
+        });        
+      newBoards.push({
+        id : board.id,
+        name : board.name,
+        stages : newStages
+      });   
+    }); 
+    store.setState({
+      boards:newBoards,
+      addBoard:false
+    }); 
+    newBoards = [];
   });
 }
+
+// export const readBoard = () => {
+//   auth.onAuthStateChanged(user => {
+//     if (user) {
+//       let usersRef = database.ref('/users');
+//       let userRef = usersRef.child(user.uid);
+//       store.setState ({
+//         successLogin : true
+//       });
+//       readAllBoards(userRef);
+//     }
+//   });
+// }
 
 // export function addBoard (value) {
 //   let userName = store.getState().user.id;
@@ -190,4 +188,41 @@ export const readBoard = () => {
 //     stage : stage
 //   } 
 //   firebase.database().ref('users/' + userId +'/tasks/' + newTask.id ).set(newTask);
+// }
+
+// export function readAllBoards (userName) {
+//   firebase.database().ref('users/'+ userName +'/stages').on ('value', res => {
+//     let stages = [];
+//     res.forEach ( snap  => {
+//       const stage = snap.val();
+//       stages.push (stage);
+//     });
+//     store.setState ({
+//       stages : stages
+//     }); 
+//   });
+
+//   firebase.database().ref('users/' + userName + '/tasks').on ('value', res => {
+//     let tasks = [];
+//     res.forEach ( snap  => {
+//       const task = snap.val();
+//       tasks.push (task)
+//     });
+//     store.setState ({
+//       tasks : tasks
+//     }); 
+//   });  
+   
+//   firebase.database().ref('users/' + userName + '/boards').on('value', res => {
+//     let boards = [];
+//     res.forEach(snap => {
+//       let board = snap.val();
+//       boards.push(board);
+//     });
+//     console.log("boards ",boards)
+//     store.setState({
+//       boards: boards
+//     });
+//   });
+//   console.log("store" ,store.getState().boards);
 // }
