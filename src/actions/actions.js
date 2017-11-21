@@ -1,6 +1,26 @@
 import store from '../store/store'
 import firebase, {auth, database} from './firebase';
 
+export function signUp (firstname, lastname, email, password) {
+  console.log ('signUp' , firstname, lastname, email, password);
+  auth.createUserWithEmailAndPassword (email, password).then ( user => {
+    let newuser = {firstname, lastname, email, password}
+    database.ref ('users/' + user.uid).set (newuser);  
+    database.ref ('users/' + user.uid).once ('value').then ( res => {
+      const fullUserInfo = res.val();
+      console.log ('full info ', fullUserInfo);
+      store.setState ( {
+        user: {
+          id : user.uid,
+          email :  fullUserInfo.email,
+          firstname :  fullUserInfo.firstname,
+          lastname :  fullUserInfo.lastname,              
+        }
+      });
+    });
+  });
+}
+
 export function readAllBoards (userName) {
   firebase.database().ref('users/'+ userName +'/stages').on ('value', res => {
     let stages = [];
@@ -108,26 +128,7 @@ export function signIn (email, password) {
   });
 }
 
-export function signUp (firstname, lastname, email, password) {
-  console.log ('signUp' , firstname, lastname, email, password);
-  auth.createUserWithEmailAndPassword (email, password).then ( user => {
-    let newuser = {firstname, lastname, email, password}
-    let userName = email.split("@")[0];
-    database.ref ('users/' + userName).set (newuser);  
-    database.ref ('users/' + userName).once ('value').then ( res => {
-      const fullUserInfo = res.val();
-      console.log ('full info ', fullUserInfo);
-      store.setState ( {
-        user: {
-          id : userName,
-          email :  fullUserInfo.email,
-          firstname :  fullUserInfo.firstname,
-          lastname :  fullUserInfo.lastname,              
-        }
-      });
-    });
-  });
-}
+
 
 export function signOut () {
   auth.signOut();
