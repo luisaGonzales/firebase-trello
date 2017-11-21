@@ -66,8 +66,6 @@ const SignIn = ({successLogin}) => {
                 <div className="text">Or</div>
                 <NavLink to= "/signUp" className="btnSubmit"> Sign Up </NavLink> 
             </Col>
-            
-            
         </div>
     );
 }

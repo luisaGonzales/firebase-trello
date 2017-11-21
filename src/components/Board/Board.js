@@ -25,22 +25,36 @@ const Board = ({stages, tasks, successLogin, user}) => {
         {list}
       </div>
       <div className="Board-column">
-        <form
-          onSubmit=
-          { (e) => { 
-            e.preventDefault(); 
-            addStage (this.stageInputRef.value);
-            this.stageInputRef.value = ""; 
-          }}>
-          <input type="text" ref= {e => this.stageInputRef = e} className="inputSI"/>
-          <button type="submit">
-            Save list
-          </button>
-        </form>
-      </div>
+      <Form 
+        horizontal
+        onSubmit = {(e) => {
+          e.preventDefault();
+          addStage(this.stageInputRef.value);
+          this.stageInputRef.value = "";
+        }}>
+        <FormGroup>
+          <FormControl 
+            className= "inputSI"
+            type = "text"
+            inputRef = {e => this.stageInputRef = e} className="inputBoard"
+          />
+          <FormGroup>
+            <Col smOffset={4} sm={4}>
+              <Button type="submit" className="btnSubmit">
+                Sign In
+              </Button>
+            </Col>
+          </FormGroup>
+      </FormGroup>
+      </Form>
+    </div>
     </div>
   );
 }
+
+
+
+
 
 const mapToProps = ({stages, tasks, successLogin, user}) => ({stages, tasks, successLogin, user});
 export default connect(mapToProps)(Board);

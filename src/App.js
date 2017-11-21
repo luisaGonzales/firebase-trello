@@ -14,7 +14,7 @@ const App = ({stages, tasks, boards, user}) => {
           <Route exact path="/" render={() => <SignIn />} />
           <Route exact path="/signIn" render={() => <SignIn />} />
           <Route exact path="/signUp" render={() => <SignUp />} />
-          <Route exact path="/desk/:board" render={() => <Board stages={stages} tasks={tasks}/>} />
+          <Route exact path="/boards" render={() => <Board stages={stages} tasks={tasks} />} />
           <Route exact path="/desk" render={() => <Desk boards={boards} />} />
           <Route render={() => <Redirect to={"/"} />}/>
       </Switch>
