@@ -6,7 +6,8 @@ import {connect} from 'redux-zero/react';
 
 const Stage = ({board, index, boardSelected, successLogin}) => {
       let list = null;
-      if(board.tasks){
+      console.log(board.tasks);
+      if(board.tasks){ 
             list = board.tasks.map ( (task, index) => {
                   return <Task  key = {index} title = {task}/>
             });
