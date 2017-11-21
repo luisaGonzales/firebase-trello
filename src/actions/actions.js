@@ -114,17 +114,18 @@ export function addBoard (value) {
   firebase.database().ref('users/' + store.getState().user.id + '/boards/' + newBoard.id).set(newBoard);
 }
 
-export function  addStage (text) {
-  let stages = [...store.getState().stages];
-  let userId = store.getState().user.id;
-  let boards = store.getState().boards;
-  console.log("user", userId);
-  let newStage = {
-    id : boards.length + '-' + text, 
-    name : text
+export function  addStage (selected, text) {
+  let newBoards = [...store.getState().boards];
+  let newId = newBoards[selected].lists.length;
+  if(!newId){
+    newId = 0;
   }
-  stages.push(text);
-  firebase.database().ref('users/' + userId + '/stages').push (text);
+  let newStage = {
+    id : newBoards[selected].lists.length, 
+    name : text,
+    tasks : []
+  }
+  firebase.database().ref('users/' + store.getState().user.id + '/boards/' + newBoards[selected].id).set(newStage);
 }
 
 export function  addTask (stage, text) {
@@ -173,3 +174,15 @@ export const readBoard = () => {
 //   firebase.database().ref('users/' + userName + '/boards/' + newBoard.id).set(newBoard);
 // }
 
+// export function  addStage (text) {
+//   let stages = [...store.getState().stages];
+//   let userId = store.getState().user.id;
+//   let boards = store.getState().boards;
+//   console.log("user", userId);
+//   let newStage = {
+//     id : boards.length + '-' + text, 
+//     name : text
+//   }
+//   stages.push(text);
+//   firebase.database().ref('users/' + userId + '/stages').push (text);
+// }
