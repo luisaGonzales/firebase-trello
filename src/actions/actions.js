@@ -91,20 +91,17 @@ export function readAllBoards (userName) {
 
 }
 
-export const readBoard = () => {
-  auth.onAuthStateChanged(user => {
-    if (user) {
-      let usersRef = database.ref('/users');
-      let userRef = usersRef.child(user.uid);
-      store.setState ({
-        successLogin : true
-      });
-      let searchUser = user.email.split("@")[0];
-      console.log("envia" , user.email.split("@")[0]);
-      readAllBoards(searchUser);
-    }
-  });
-}
+auth.onAuthStateChanged(user => {
+  if (user) {
+    let usersRef = database.ref('/users');
+    let userRef = usersRef.child(user.uid);
+    store.setState ({
+      successLogin : true
+    });
+  }
+});
+
+
 
 export function addBoard (value) {
   let userName = store.getState().user.id;
@@ -143,7 +140,20 @@ export function  addTask (stage, text) {
 }
 
 
-
+// export const readBoard = () => {
+//   auth.onAuthStateChanged(user => {
+//     if (user) {
+//       let usersRef = database.ref('/users');
+//       let userRef = usersRef.child(user.uid);
+//       store.setState ({
+//         successLogin : true
+//       });
+//       let searchUser = user.email.split("@")[0];
+//       console.log("envia" , user.email.split("@")[0]);
+//       readAllBoards(searchUser);
+//     }
+//   });
+// }
 
 
 
