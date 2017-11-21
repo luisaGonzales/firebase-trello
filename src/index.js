@@ -14,7 +14,7 @@ const Index = () => {
         </Provider>
     );
 }
-// readBoard();
+readBoard();
 
 ReactDOM.render(<Index />, document.getElementById('root'));
 registerServiceWorker();

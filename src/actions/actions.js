@@ -48,7 +48,7 @@ export function signIn (email, password) {
           password : fullUserInfo.password           
         }
       });
-      readBoards();
+      readBoard();
     });
   });
 }
@@ -104,7 +104,7 @@ export const viewBoard = (index) => {
   console.log("storeIndex", store.getState().boardSelect);
 }
 
-export function readBoards(){
+export function readBoard(){
   let newBoards = [];
   firebase.database().ref('users/' + store.getState().user.id +'/boards/').on('value', res => {
     res.forEach( snap => {
@@ -114,7 +114,7 @@ export function readBoards(){
           res.forEach( snap  => {
             const stage = snap.val();
             let newTasks =[];
-            firebase.database().ref('users/' + store.getState().user.id + '/boards/' + board.id + '/stages/' + stage.id + '/tasks/').on('value',res => {
+            firebase.database().ref('users/' + store.getState().user.id + '/boards/' + board.id + '/stages/' + stage.id + '/tasks/').on ('value',res => {
               res.forEach(snap => {
                 const task = snap.val();
                 newTasks.push(task);
@@ -134,10 +134,9 @@ export function readBoards(){
       });   
     }); 
     store.setState({
-      boards:newBoards,
-      addBoard:false
+      boards : newBoards,
     }); 
-    newBoards = [];
+    console.log("store", store.getState().boards);
   });
 }
 
