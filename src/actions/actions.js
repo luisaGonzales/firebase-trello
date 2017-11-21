@@ -34,6 +34,25 @@ export function signOut () {
   console.log("successLogin",store.getState().successLogin);
 }
 
+export function signIn (email, password) {
+  auth.signInWithEmailAndPassword(email, password).then (userObj => {
+    database.ref ('users/' + userObj.uid).once ('value').then ( res => {
+      const fullUserInfo = res.val(); 
+      console.log ('full info ', fullUserInfo);
+      store.setState ( {
+        user: {
+          id : userObj.uid,
+          email :  fullUserInfo.email,
+          firstname : fullUserInfo.firstname,
+          lastname : fullUserInfo.lastname,
+          password : fullUserInfo.password           
+        }
+      });
+      // readBoard();
+    });
+  });
+}
+
 export function readAllBoards (userName) {
   firebase.database().ref('users/'+ userName +'/stages').on ('value', res => {
     let stages = [];
@@ -123,23 +142,7 @@ export function  addTask (stage, text) {
   firebase.database().ref('users/' + userId +'/tasks/' + newTask.id ).set(newTask);
 }
 
-export function signIn (email, password) {
-  auth.signInWithEmailAndPassword(email, password).then (userObj => {
-    let userName = userObj.email.split("@")[0];
-    database.ref ('users/' + userName).once ('value').then ( res => {
-      const fullUserInfo = res.val(); 
-      console.log ('full info ', fullUserInfo);
-      store.setState ( {
-        user: {
-          id : userName,
-          email :  fullUserInfo.email,
-          firstname : fullUserInfo.firstname,
-          lastname : fullUserInfo.lastname,           
-        }
-      });
-    });
-  });
-}
+
 
 
 
