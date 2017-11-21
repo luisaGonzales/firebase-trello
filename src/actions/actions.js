@@ -106,9 +106,14 @@ export function  addStage (selected, text) {
   console.log("stagesa", newBoards[selected].stages)
   if(!newId) {
     newId = 0;
+  } else if (newId == undefined) {
+    newId = 0;
+  } else {
+    newId = newBoards[selected].stages.length
   }
+
   let newStage = {
-    id : newBoards[selected].stages.length,
+    id : newId,
     name : text,
     tasks: [],
   }
