@@ -9,7 +9,6 @@ import Header from '../Header/Header';
 
 const Board = ({boards, successLogin, boardSelect, user }) => {
   let  list = null;
-  console.log("stages", boards[boardSelect].stages);
   if ((boards[boardSelect].stages))  {
     list = boards[boardSelect].stages.map((stage, index) => {
       return <Stage
@@ -17,7 +16,6 @@ const Board = ({boards, successLogin, boardSelect, user }) => {
         board={stage} 
         index={index} 
         boardSelected={boardSelect}
-        successLogin={successLogin}
         />
     });
   }
