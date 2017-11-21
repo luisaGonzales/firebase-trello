@@ -19,7 +19,7 @@ const TitleBoard = ({title}) =>  (
 const Desk = ({successLogin, boards, user}) => {
     const deskList = boards.map ((board, index) => {
         return (
-            <li key={index}>
+            <li key={index} className="board">
                 <TitleBoard title={board.name} />
             </li>
         );   
@@ -31,10 +31,10 @@ const Desk = ({successLogin, boards, user}) => {
                 !successLogin && <Redirect to = '/signIn' />
             }
             <Header name={user.firstname}/>
-            <div>
-            <ul>
-                {deskList}
-            </ul>
+            <div className="allBoards">
+                <ul >
+                    {deskList}
+                </ul>
             </div>
             <Form
                 horizontal
