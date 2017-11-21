@@ -128,15 +128,9 @@ export function  addStage (selected, text) {
   firebase.database().ref('users/' + store.getState().user.id + '/boards/' + newBoards[selected].id).set(newStage);
 }
 
-export function  addTask (stage, text) {
-  let tasks = [...store.getState().tasks];
-  let userId = store.getState().user.id;
-  let newTask = {
-    id : store.getState().tasks.length,
-    title: text,
-    stage : stage
-  } 
-  firebase.database().ref('users/' + userId +'/tasks/' + newTask.id ).set(newTask);
+export function  addTask (selected, index, text) {
+  let newBoards = [...store.getState().boards];
+  firebase.database().ref('users/' + store.getState().user.id +'/boards/' + newBoards[selected].id + '/stages/' + newBoards[selected].lists[index].id + '/tasks/'  ).push(text);
 }
 
 export const viewBoard = (index) => {
@@ -185,4 +179,15 @@ export const readBoard = () => {
 //   }
 //   stages.push(text);
 //   firebase.database().ref('users/' + userId + '/stages').push (text);
+// }
+
+// export function  addTask (stage, text) {
+//   let tasks = [...store.getState().tasks];
+//   let userId = store.getState().user.id;
+//   let newTask = {
+//     id : store.getState().tasks.length,
+//     title: text,
+//     stage : stage
+//   } 
+//   firebase.database().ref('users/' + userId +'/tasks/' + newTask.id ).set(newTask);
 // }
