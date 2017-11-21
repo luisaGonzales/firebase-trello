@@ -16,7 +16,7 @@ const Board = ({boards, successLogin, boardSelect, user }) => {
         key={index}
         board={stage} 
         index={index} 
-        boardSelect={boardSelect} 
+        boardSelected={boardSelect}
         successLogin={successLogin}
         />
     });

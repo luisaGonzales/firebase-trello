@@ -103,7 +103,8 @@ export function  addStage (selected, text) {
   console.log("text", text);
   let newBoards = [...store.getState().boards];
   let newId = newBoards[selected].stages;
-  console.log("stagesa", newBoards[selected].stages)
+  console.log("stagesa", newBoards[selected].stages);
+
   if(!newId) {
     newId = 0;
   } else if (newId == undefined) {
@@ -124,8 +125,13 @@ export function  addStage (selected, text) {
 }
 
 export function  addTask (selected, index, text) {
+  console.log("selectedtask", selected);
+  console.log("storeselect", store.getState().boardSelect);
+  console.log("index task", index);
+  console.log("text task", text);
   let newBoards = [...store.getState().boards];
-  firebase.database().ref('users/' + store.getState().user.id +'/boards/' + newBoards[selected].id + '/stages/' + newBoards[selected].stages[index].id + '/tasks/').push(text);
+  let user = store.getState().user; 
+  firebase.database().ref('users/' + user.id +'/boards/' + newBoards[selected].id + '/stages/' + newBoards[selected].stages[index].id + '/tasks/').push(text);
 }
 
 export const viewBoard = (index) => {

@@ -1,6 +1,7 @@
 import React from 'react'
 import Task from '../Task/Task'
-import {addTask} from '../../actions/actions'
+import {addTask} from '../../actions/actions';
+import {connect} from 'redux-zero/react';
 
 const Stage = ({board, index, boardSelected, successLogin}) => {
       let list = null;
@@ -28,4 +29,6 @@ const Stage = ({board, index, boardSelected, successLogin}) => {
             
       );
 }
-export default Stage;
+
+const mapToProps = ({successLogin}) => ({successLogin})
+export default connect(mapToProps)(Stage);
