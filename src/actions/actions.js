@@ -21,6 +21,19 @@ export function signUp (firstname, lastname, email, password) {
   });
 }
 
+export function signOut () {
+  auth.signOut();
+  store.setState ( {
+     successLogin : false,
+     boards : [],
+     user: {
+        id :'',
+        email :  '', 
+     }
+  });
+  console.log("successLogin",store.getState().successLogin);
+}
+
 export function readAllBoards (userName) {
   firebase.database().ref('users/'+ userName +'/stages').on ('value', res => {
     let stages = [];
@@ -130,18 +143,5 @@ export function signIn (email, password) {
 
 
 
-export function signOut () {
-  auth.signOut();
-  store.setState ( {
-     successLogin : false,
-     boards : [],
-     stages : [],
-     tasks : [],
-     user: {
-        id :'',
-        email :  '', 
-     }
-  })
-  console.log(store.getState().successLogin);
-}
+
 
