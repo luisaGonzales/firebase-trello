@@ -20,6 +20,7 @@ const TitleBoard = ({board, index}) =>  {
 
 const Desk = ({successLogin, boards, user}) => {
     const deskList = boards.map ((board, index) => {
+        console.log("desk",board)
         return (
             <TitleBoard key={index} board={board} index={index}/>
         );   

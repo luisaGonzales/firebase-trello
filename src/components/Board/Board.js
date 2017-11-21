@@ -7,13 +7,15 @@ import {connect} from 'redux-zero/react';
 import {Redirect} from 'react-router-dom';
 import Header from '../Header/Header';
 
-const Board = ({stages, tasks, successLogin, user}) => {
-  const list = stages.map(stage => {
+const Board = ({boards, successLogin, boardSelect, user }) => {
+  const list = boards[boardSelect].stages.map((stage, index) => {
     return <Stage
-      key={stage}
-      title={stage}
-      tasks=
-      { tasks.filter ( e => e.stage === stage )}/>
+      key={index}
+      board={stage} 
+      index={index} 
+      boardSelect={boardSelect} 
+      successLogin={successLogin}
+      />
   });
   return (
     <div className="Board-container">
@@ -21,6 +23,7 @@ const Board = ({stages, tasks, successLogin, user}) => {
         !successLogin && <Redirect to='/signIn'/>
       }
       <Header name={user.firstname}/>
+      <h3>{boards[boardSelect].name}</h3>
       <div className="Board-column">
         {list}
       </div>
@@ -29,7 +32,7 @@ const Board = ({stages, tasks, successLogin, user}) => {
         horizontal
         onSubmit = {(e) => {
           e.preventDefault();
-          addStage(this.stageInputRef.value);
+          addStage(boardSelect, this.stageInputRef.value);
           this.stageInputRef.value = "";
         }}>
         <FormGroup>
@@ -41,7 +44,7 @@ const Board = ({stages, tasks, successLogin, user}) => {
           <FormGroup>
             <Col smOffset={4} sm={4}>
               <Button type="submit" className="btnSubmit">
-                Sign In
+                Add Stage
               </Button>
             </Col>
           </FormGroup>
@@ -52,9 +55,5 @@ const Board = ({stages, tasks, successLogin, user}) => {
   );
 }
 
-
-
-
-
-const mapToProps = ({stages, tasks, successLogin, user}) => ({stages, tasks, successLogin, user});
+const mapToProps = ({boards, successLogin, boardSelect, user }) => ({boards, successLogin, boardSelect, user });
 export default connect(mapToProps)(Board);

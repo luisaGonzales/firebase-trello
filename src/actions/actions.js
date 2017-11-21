@@ -17,6 +17,7 @@ export function signUp (firstname, lastname, email, password) {
           lastname :  fullUserInfo.lastname,              
         }
       });
+      console.log("SUuser", store.getState().user);
     });
   });
 }
@@ -48,7 +49,7 @@ export function signIn (email, password) {
           password : fullUserInfo.password           
         }
       });
-      readBoard();
+      console.log("SIuser", store.getState().user);
     });
   });
 }
@@ -64,27 +65,29 @@ auth.onAuthStateChanged(user => {
 });
 
 export function addBoard (value) {
+  console.log("val", value);
   let boards = [...store.getState().boards];
   let newId = boards.length;
   if (!newId){
     newId = 0
   }
-  console.log("boards" , boards);
+  console.log("add-boards" , boards);
   let newBoard = {
     id : newId, 
     name: value 
   }
   firebase.database().ref('users/' + store.getState().user.id + '/boards/' + newBoard.id).set(newBoard);
+  console.log("storeBoards", store.getState().boards);
 }
 
 export function  addStage (selected, text) {
   let newBoards = [...store.getState().boards];
-  let newId = newBoards[selected].lists.length;
+  let newId = newBoards[selected].stages.length;
   if(!newId){
     newId = 0;
   }
   let newStage = {
-    id : newBoards[selected].lists.length, 
+    id : newBoards[selected].stages.length, 
     name : text,
     tasks : []
   }
@@ -93,7 +96,7 @@ export function  addStage (selected, text) {
 
 export function  addTask (selected, index, text) {
   let newBoards = [...store.getState().boards];
-  firebase.database().ref('users/' + store.getState().user.id +'/boards/' + newBoards[selected].id + '/stages/' + newBoards[selected].lists[index].id + '/tasks/'  ).push(text);
+  firebase.database().ref('users/' + store.getState().user.id +'/boards/' + newBoards[selected].id + '/stages/' + newBoards[selected].stages[index].id + '/tasks/'  ).push(text);
 }
 
 export const viewBoard = (index) => {
@@ -106,9 +109,11 @@ export const viewBoard = (index) => {
 
 export function readBoard(){
   let newBoards = [];
-  firebase.database().ref('users/' + store.getState().user.id +'/boards/').on('value', res => {
+  firebase.database().ref('users/' + store.getState().user.id +'/boards').on('value', res => {
+    console.log("read", res);
     res.forEach( snap => {
       const board = snap.val();
+      console.log("boardsnap",board);
       let newStages = [];
         firebase.database().ref('users/' + store.getState().user.id +'/boards/' + board.id + '/stages/').on('value', res => {
           res.forEach( snap  => {
@@ -133,6 +138,7 @@ export function readBoard(){
         stages : newStages
       });   
     }); 
+    console.log("newboards", newBoards)
     store.setState({
       boards : newBoards,
     }); 
