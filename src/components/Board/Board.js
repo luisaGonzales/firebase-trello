@@ -2,7 +2,7 @@ import React from 'react'
 import {addStage, signOut} from '../../actions/actions'
 import Stage from '../Stage/Stage';
 import './Board.css';
-import {Button} from 'react-bootstrap';
+import {Button, Form, FormGroup, FormControl, Col} from 'react-bootstrap';
 import {connect} from 'redux-zero/react';
 import {Redirect} from 'react-router-dom';
 import Header from '../Header/Header';
