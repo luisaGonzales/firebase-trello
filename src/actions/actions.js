@@ -88,7 +88,6 @@ export function readAllBoards (userName) {
     });
   });
   console.log("store" ,store.getState().boards);
-
 }
 
 auth.onAuthStateChanged(user => {
@@ -101,18 +100,18 @@ auth.onAuthStateChanged(user => {
   }
 });
 
-
-
 export function addBoard (value) {
-  let userName = store.getState().user.id;
   let boards = [...store.getState().boards];
-  console.log("user", userName);
-  console.log("boa" , boards);
-  let newBoard = {
-    name: value,
-    id: boards.length + '-' + value, 
+  let newId = boards.length;
+  if (!newId){
+    newId = 0
   }
-  firebase.database().ref('users/' + userName + '/boards/' + newBoard.id).set(newBoard);
+  console.log("boards" , boards);
+  let newBoard = {
+    id : newId, 
+    name: value 
+  }
+  firebase.database().ref('users/' + store.getState().user.id + '/boards/' + newBoard.id).set(newBoard);
 }
 
 export function  addStage (text) {
@@ -139,22 +138,38 @@ export function  addTask (stage, text) {
   firebase.database().ref('users/' + userId +'/tasks/' + newTask.id ).set(newTask);
 }
 
+export const viewBoard = (index) => {
+  console.log("index", index);
+  store.setState({
+    boardSelect : index
+  });
+  console.log("storeIndex", store.getState().boardSelect);
+}
 
-// export const readBoard = () => {
-//   auth.onAuthStateChanged(user => {
-//     if (user) {
-//       let usersRef = database.ref('/users');
-//       let userRef = usersRef.child(user.uid);
-//       store.setState ({
-//         successLogin : true
-//       });
-//       let searchUser = user.email.split("@")[0];
-//       console.log("envia" , user.email.split("@")[0]);
-//       readAllBoards(searchUser);
-//     }
-//   });
+
+
+export const readBoard = () => {
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      let usersRef = database.ref('/users');
+      let userRef = usersRef.child(user.uid);
+      store.setState ({
+        successLogin : true
+      });
+      readAllBoards(userRef);
+    }
+  });
+}
+
+// export function addBoard (value) {
+//   let userName = store.getState().user.id;
+//   let boards = [...store.getState().boards];
+//   console.log("user", userName);
+//   console.log("boa" , boards);
+//   let newBoard = {
+//     name: value,
+//     id: boards.length + '-' + value, 
+//   }
+//   firebase.database().ref('users/' + userName + '/boards/' + newBoard.id).set(newBoard);
 // }
-
-
-
 
