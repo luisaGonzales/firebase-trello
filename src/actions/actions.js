@@ -48,7 +48,7 @@ export function signIn (email, password) {
           password : fullUserInfo.password           
         }
       });
-      // readBoard();
+      readBoards();
     });
   });
 }
