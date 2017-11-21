@@ -14,7 +14,7 @@
     width: 100%;
     max-width: 200px;
     padding: 0 10px 0px 10px;
-    top: 80px;
+    top: 170px;
     position: absolute;
   }
   
@@ -48,7 +48,7 @@
   background: rgba(222, 225, 227, 0.9);
   border-radius: 3px;
   padding: 0.75em;
-  margin-top: 20px;
+  margin-top: -60px;
 }
 
 .buttonBoard{
