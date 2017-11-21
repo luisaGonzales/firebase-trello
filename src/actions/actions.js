@@ -102,7 +102,7 @@ export function  addStage (selected, text) {
   console.log("login", selected);
   console.log("text", text);
   let newBoards = [...store.getState().boards];
-  let newId = newBoards[selected].stages.length;
+  let newId = newBoards[selected].stages;
   console.log("stagesa", newBoards[selected].stages)
   if(!newId) {
     newId = 0;
