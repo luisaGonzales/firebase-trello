@@ -115,8 +115,7 @@ export function  addStage (selected, text) {
 
   let newStage = {
     id : newId,
-    name : text,
-    tasks: [],
+    name : text
   }
   let user = store.getState().user;
   console.log("user", user);
@@ -131,6 +130,9 @@ export function  addTask (selected, index, text) {
   console.log("text task", text);
   let newBoards = [...store.getState().boards];
   let user = store.getState().user; 
+  if(newBoards[selected]){
+    console.log("taskdirect", 'users/' + user.id +'/boards/' + newBoards[selected].id + '/stages/' + newBoards[selected].stages[index].id + '/tasks/' );
+  }
   firebase.database().ref('users/' + user.id +'/boards/' + newBoards[selected].id + '/stages/' + newBoards[selected].stages[index].id + '/tasks/').push(text);
 }
 
