@@ -129,11 +129,23 @@ export function  addTask (selected, index, text) {
   console.log("index task", index);
   console.log("text task", text);
   let newBoards = [...store.getState().boards];
+  let newId = newBoards[selected].stages[index].tasks;
   let user = store.getState().user; 
+  if(!newId) {
+    newId = 0;
+  } else if (newId == undefined) {
+    newId = 0;
+  } else {
+    newId = newBoards[selected].stages[index].tasks.length
+  }
+  let newTask = {
+    id : newId,
+    name : text
+  }
   if(newBoards[selected]){
     console.log("taskdirect", 'users/' + user.id +'/boards/' + newBoards[selected].id + '/stages/' + newBoards[selected].stages[index].id + '/tasks/' );
   }
-  firebase.database().ref('users/' + user.id +'/boards/' + newBoards[selected].id + '/stages/' + newBoards[selected].stages[index].id + '/tasks/').push(text);
+  firebase.database().ref('users/' + user.id +'/boards/' + newBoards[selected].id + '/stages/' + newBoards[selected].stages[index].id + '/tasks/' + newTask.id ).set(newTask);
 }
 
 export const viewBoard = (index) => {
